@@ -1,0 +1,890 @@
+swagger: "2.0"
+info:
+  description: "Este é documentação de end-point REST Full do projeto Melhoria Multilaser"
+  version: "1.0.0"
+  title: "Melhoria Multilaser"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@swagger.io"
+  license:
+    name: "MIT"
+    url: "https://opensource.org/licenses/MIT"
+host: "melhoria-multilaser.grupoicts.com.br:3000"
+basePath: "/v1"
+tags:
+- name: "user"
+  description: "CRUD de usuários do sistema"
+- name: "workgroups"
+  description: "CRUD de Grupo de trabalho"
+- name: "workstations"
+  description: "CRUD de Estações de trabalho"
+- name: "products"
+  description: "CRUD de produtos"
+- name: "lines"
+  description: "CRUD de linhas de produção"
+- name: "sessions"
+  description: "System access"
+- name: "machines"
+  description: "Upload of Machines"
+- name: "production"
+  description: "Upload of production file"
+- name: "bom"
+  description: "Upload of bom file"
+- name: "feeder"
+  description: "CRUD de feeder"
+schemes:
+- "https"
+- "http"
+paths:
+
+  /employees:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      description: "It can only be done with a logged in user"
+      operationId: "createUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "created"
+    get:
+      tags:
+      - "user"
+      summary: "List Users"
+      description: "List of users registered in the system"
+      operationId: "listUserAll"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /employees/search:
+    get:
+      tags:
+      - "user"
+      summary: "List Users"
+      description: "Search of users registered in the system"
+      operationId: "listUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "name"
+        in: "query"
+        description: "Search user"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /employees/{username}:
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "It can only be done with a logged in user"
+      operationId: "updateUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "Name that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "It can only be done with a logged in user"
+      operationId: "deleteUser"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "204":
+          description: "No content"
+        "404":
+          description: "User not found"
+
+  /workgroups:
+    post:
+      tags:
+      - "workgroups"
+      summary: "Create work groups"
+      description: "It can only be done with a logged in user"
+      operationId: "createWorkGroups"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created work group object"
+        required: true
+        schema:
+          $ref: "#/definitions/WorkGroups"
+      responses:
+        "201":
+          description: "created"
+    get:
+      tags:
+      - "workgroups"
+      summary: "List Work Groups"
+      description: "List of work groups registered in the system"
+      operationId: "listWorkGroupsAll"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /workgroups/search:
+    get:
+      tags:
+      - "workgroups"
+      summary: "List Work groups"
+      description: "Search of work groups registered in the system"
+      operationId: "listWorkGroups"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "query"
+        name: "name"
+        description: "Search work grops"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /workgroups/{id}:
+    put:
+      tags:
+      - "workgroups"
+      summary: "Updated work groups"
+      description: "It can only be done with a logged in user"
+      operationId: "updateWorkGroups"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated work group object"
+        required: true
+        schema:
+          $ref: "#/definitions/WorkGroups"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - "workgroups"
+      summary: "Delete work group"
+      description: "It can only be done with a logged in user"
+      operationId: "deleteWorkGroup"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "204":
+          description: "No content"
+        "404":
+          description: "User not found"
+
+  /workstations:
+    post:
+      tags:
+      - "workstations"
+      summary: "Create work station"
+      description: "It can only be done with a logged in user"
+      operationId: "createWorkstations"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created work station object"
+        required: true
+        schema:
+          $ref: "#/definitions/WorkStations"
+      responses:
+        "201":
+          description: "created"
+    get:
+      tags:
+      - "workstations"
+      summary: "List work station"
+      description: "List of work groups registered in the system"
+      operationId: "listWorkstationsAll"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /workstations/{id}:
+    delete:
+      tags:
+      - "workstations"
+      summary: "Delete work stations"
+      description: "It can only be done with a logged in user"
+      operationId: "deleteWorkstations"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "204":
+          description: "No content"
+        "404":
+          description: "User not found"
+
+  /products:
+    post:
+      tags:
+      - "products"
+      summary: "Create products"
+      description: "It can only be done with a logged in user"
+      operationId: "createProducts"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created Products object"
+        required: true
+        schema:
+          $ref: "#/definitions/Products"
+      responses:
+        "201":
+          description: "created"
+    get:
+      tags:
+      - "products"
+      summary: "List Products"
+      description: "List of products registered in the system"
+      operationId: "listProductsAll"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "pagination of list Products"
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /products/search:
+    get:
+      tags:
+      - "products"
+      summary: "List Products"
+      description: "Search of Products registered in the system"
+      operationId: "listProducts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "product_name"
+        in: "query"
+        description: "Search Products"
+        required: true
+        type: "string"
+
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /products/{product_name}:
+    put:
+      tags:
+      - "products"
+      summary: "Updated Products"
+      description: "It can only be done with a logged in user"
+      operationId: "updateProducts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "product_name"
+        in: "path"
+        description: "product_name that need to be updated"
+        required: true
+        type: "string"
+
+      - in: "body"
+        name: "body"
+        description: "Updated Products object"
+        required: true
+        schema:
+          $ref: "#/definitions/Products"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - "products"
+      summary: "Delete Products"
+      description: "It can only be done with a logged in user"
+      operationId: "deleteProducts"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "product_name"
+        in: "path"
+        description: "The product_name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        "204":
+          description: "No content"
+        "404":
+          description: "User not found"
+
+  /lines:
+    post:
+      tags:
+      - "lines"
+      summary: "Create Lines"
+      description: "It can only be done with a logged in user"
+      operationId: "createLines"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created Lines object"
+        required: true
+        schema:
+          $ref: "#/definitions/Lines"
+      responses:
+        "201":
+          description: "created"
+    get:
+      tags:
+      - "lines"
+      summary: "List Lines"
+      description: "List of lines registered in the system"
+      operationId: "listLinesAll"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "pagination of list Lines"
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /lines/search:
+    get:
+      tags:
+      - "lines"
+      summary: "List Lines"
+      description: "Search of Lines registered in the system"
+      operationId: "listLines"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "line_name"
+        in: "query"
+        description: "Search Lines"
+        required: true
+        type: "string"
+
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /lines/{id}:
+    put:
+      tags:
+      - "lines"
+      summary: "Updated Lines"
+      description: "It can only be done with a logged in user"
+      operationId: "updateLines"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id that need to be updated"
+        required: true
+        type: "integer"
+
+      - in: "body"
+        name: "body"
+        description: "Updated Lines object"
+        required: true
+        schema:
+          $ref: "#/definitions/Lines"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: "Bad Request"
+    delete:
+      tags:
+      - "lines"
+      summary: "Delete Lines"
+      description: "It can only be done with a logged in user"
+      operationId: "deleteLines"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "integer"
+      responses:
+        "204":
+          description: "No content"
+        "404":
+          description: "User not found"
+
+  /sessions:
+    post:
+      tags:
+      - "sessions"
+      summary: "Authenticate"
+      description: ""
+      operationId: "authentication"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created Lines object"
+        required: true
+        schema:
+          $ref: "#/definitions/Sessions"
+      responses:
+        "201":
+          description: "created"
+
+  /machines:
+    post:
+      tags:
+      - "machines"
+      summary: "Uploade File"
+      description: ""
+      operationId: "uploadFileMachines"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "machine"
+        in: "formData"
+        description: "file to upload"
+        required: true
+        type: "file"
+
+      - name: "struct_bom_code"
+        in: "formData"
+        description: ""
+        required: true
+        type: "string"
+
+      - name: "side_product"
+        in: "formData"
+        description: ""
+        required: true
+        type: "string"
+
+      responses:
+        "201":
+          description: "created"
+
+  /production:
+    post:
+      tags:
+      - "production"
+      summary: "Uploade File"
+      description: ""
+      operationId: "uploadFileProduction"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "order"
+        in: "formData"
+        description: "file to upload"
+        required: true
+        type: "file"
+
+      - name: "id_employee"
+        in: "formData"
+        description: ""
+        required: true
+        type: "string"
+
+
+      responses:
+        "201":
+          description: "created"
+          # schema:
+          #   $ref: "#/definitions/ProductionOrder"
+    get:
+      tags:
+      - "production"
+      summary: "List Production"
+      description: "List of lines registered in the system"
+      operationId: "listProductionAll"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "pagination of list Production"
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /production/search:
+    get:
+      tags:
+      - "production"
+      summary: "List Production"
+      description: "Search of Production registered in the system"
+      operationId: "listProduction"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "mo_code"
+        in: "query"
+        description: "Search Production"
+        required: true
+        type: "string"
+
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+
+  /bom:
+    post:
+      tags:
+      - "bom"
+      summary: "Uploade File"
+      description: ""
+      operationId: "uploadFileBom"
+      consumes:
+      - "multipart/form-data"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "bom"
+        in: "formData"
+        description: "file to upload"
+        required: true
+        type: "file"
+
+      responses:
+        "201":
+          description: "created"
+          # schema:
+          #   $ref: "#/definitions/ProductionOrder"
+
+  /feeder:
+    post:
+      tags:
+      - "feeder"
+      summary: "Create Feeder"
+      description: "It can only be done with a logged in user"
+      operationId: "createFeeder"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created Feeder object"
+        required: true
+        schema:
+          $ref: "#/definitions/Feeder"
+      responses:
+        "201":
+          description: "created"
+    get:
+      tags:
+      - "feeder"
+      summary: "List Feeder"
+      description: "List of Feeder registered in the system"
+      operationId: "listFeederAll"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "page"
+        in: "query"
+        description: "pagination of list Lines"
+        type: "integer"
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /feeder/search:
+    get:
+      tags:
+      - "feeder"
+      summary: "List Feeder"
+      description: "Search of Feeder registered in the system"
+      operationId: "listFeeder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "feeder_code"
+        in: "query"
+        description: "Search Lines"
+        required: true
+        type: "string"
+
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /feeder/type:
+    get:
+      tags:
+      - "feeder"
+      summary: "List Feeder"
+      description: "Search of Type Feeder registered in the system"
+      operationId: "listTyptFeeder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "feeder_code"
+        in: "query"
+        description: "Search Lines"
+        required: true
+        type: "string"
+
+      responses:
+        "200":
+          description: "Successful Operation"
+        "400":
+          description: "Bad Request"
+  /feeder/{feeder_code}:
+    put:
+      tags:
+      - "feeder"
+      summary: "Updated Feeder"
+      description: "It can only be done with a logged in user"
+      operationId: "updateFeeder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "feeder_code"
+        in: "path"
+        description: "feeder_code that need to be updated"
+        required: true
+        type: "string"
+
+      - in: "body"
+        name: "body"
+        description: "Updated Lines object"
+        required: true
+        schema:
+          $ref: "#/definitions/FeederUpdate"
+      responses:
+        "201":
+          description: "Created"
+        "400":
+          description: "Bad Request"
+  /feeder/{id}:
+    delete:
+      tags:
+      - "feeder"
+      summary: "Delete Feeder"
+      description: "It can only be done with a logged in user"
+      operationId: "deleteFeeder"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "The id that needs to be deleted"
+        required: true
+        type: "integer"
+      responses:
+        "204":
+          description: "No content"
+        "404":
+          description: "User not found"
+
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      username:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      role:
+        type: "string"
+      departament:
+        type: "string"
+    xml:
+      name: "User"
+  WorkGroups:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+    xml:
+      name: "WorkGroups"
+  WorkStations:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      workgroup_id:
+        type: "integer"
+        format: "int64"
+    xml:
+      name: "WorkStations"
+  Products:
+    type: "object"
+    properties:
+      product_name:
+        type: "string"
+      description:
+        type: "string"
+      type_side:
+        type: "string"
+    xml:
+      name: "Products"
+  Lines:
+    type: "object"
+    properties:
+      line_name:
+        type: "string"
+      description:
+        type: "string"
+    xml:
+      name: "Lines"
+  Sessions:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "Sessions"
+  Machines:
+    type: "object"
+    properties:
+      machine:
+        type: "string"
+      struct_bom_code:
+        type: "string"
+      side_product:
+        type: "string"
+    xml:
+      name: "Machines"
+  ProductionOrder:
+    type: "object"
+    properties:
+      order:
+        type: "string"
+      id_employee:
+        type: "string"
+
+    xml:
+      name: "ProductionOrder"
+  Feeder:
+    type: "object"
+    properties:
+      feeder_code:
+        type: "string"
+      mouting_limit:
+        type: "integer"
+      id_type_feeder:
+        type: "integer"
+    xml:
+      name: "Products"
+  FeederUpdate:
+    type: "object"
+    properties:
+      feeder_code:
+        type: "string"
+      status:
+        type: "string"
+      mouting_limit:
+        type: "integer"
+      id_type_feeder:
+        type: "integer"
+    xml:
+      name: "Products"
+
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

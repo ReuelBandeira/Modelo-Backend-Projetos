@@ -1,0 +1,10 @@
+DB_HOST='localhost'
+DB_PORT=3306
+DB_USERNAME='root'
+DB_PASS=
+DB_NAME='melhoria'
+
+PORT=3334
+
+
+
